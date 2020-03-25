@@ -10,6 +10,11 @@ PyTorch 1.3 implementation of the following paper:
 ```bash
 CUDA_VISIBLE_DEVICES=0 python3 main.py --exp_id=0 --database=LIVE
 ```
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python3 main_polyp.py --exp_id=0 --database=POLYP
+```
+
 Before training, the `im_dir` in `config.yaml` must to be specified.
 Train/Val/Test split ratio in intra-database experiments can be set in `config.yaml` (default is 0.6/0.2/0.2).
 
