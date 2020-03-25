@@ -16,7 +16,7 @@ Train/Val/Test split ratio in intra-database experiments can be set in `config.y
 ## Evaluation
 Test Demo
 ```bash
-python test_demo.py --im_path=data/I03_01_1.bmp
+python3 test_demo.py --im_path=data/I03_01_1.bmp
 ```
 ### Cross Dataset
 ```bash
