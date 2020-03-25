@@ -36,6 +36,56 @@ def NonOverlappingCropPatches(im, patch_size=32, stride=32):
             patches = patches + (patch,)
     return patches
 
+def loadmat(filename):
+    '''
+    this function should be called instead of direct spio.loadmat
+    as it cures the problem of not properly recovering python dictionaries
+    from mat files. It calls the function check keys to cure all entries
+    which are still mat-objects
+    '''
+    def _check_keys(d):
+        '''
+        checks if entries in dictionary are mat-objects. If yes
+        todict is called to change them to nested dictionaries
+        '''
+        for key in d:
+            if isinstance(d[key], sio.matlab.mio5_params.mat_struct):
+                d[key] = _todict(d[key])
+        return d
+
+    def _todict(matobj):
+        '''
+        A recursive function which constructs from matobjects nested dictionaries
+        '''
+        d = {}
+        for strg in matobj._fieldnames:
+            elem = matobj.__dict__[strg]
+            if isinstance(elem, sio.matlab.mio5_params.mat_struct):
+                d[strg] = _todict(elem)
+            elif isinstance(elem, np.ndarray):
+                d[strg] = _tolist(elem)
+            else:
+                d[strg] = elem
+        return d
+
+    def _tolist(ndarray):
+        '''
+        A recursive function which constructs lists from cellarrays
+        (which are loaded as numpy ndarrays), recursing into the elements
+        if they contain matobjects.
+        '''
+        elem_list = []
+        for sub_elem in ndarray:
+            if isinstance(sub_elem, sio.matlab.mio5_params.mat_struct):
+                elem_list.append(_todict(sub_elem))
+            elif isinstance(sub_elem, np.ndarray):
+                elem_list.append(_tolist(sub_elem))
+            else:
+                elem_list.append(sub_elem)
+        return elem_list
+    data = sio.loadmat(filename, struct_as_record=False, squeeze_me=True)
+    return _check_keys(data)
+
 
 class PolypDataset(Dataset):
     def __init__(self, conf, exp_id=0, status='train', loader=default_loader):
@@ -45,12 +95,12 @@ class PolypDataset(Dataset):
         self.stride = conf['stride']
         datainfo = conf['datainfo']
 
-        Info = sio.loadmat(datainfo)
+        Info = loadmat(datainfo)
 
         print("Info ")
         print(Info)
 
-        Info = h5py.File(datainfo, 'r')
+        #Info = h5py.File(datainfo, 'r')
 
         ref_ids = Info['ref_ids']
         test_ratio = conf['test_ratio']
@@ -83,9 +133,9 @@ class PolypDataset(Dataset):
             self.index = val_index
             print("# Val Images: {}".format(len(self.index)))
 
-        self.mos = Info['subjective_scores'][:,:self.index].squeeze().tolist()
-        self.mos_std = Info['subjective_scoresSTD'][:,:self.index].squeeze().tolist()
-        im_names = Info['im_names'][:,:self.index].squeeze().tolist()
+        self.mos = Info['subjective_scores']
+        self.mos_std = Info['subjective_scoresSTD']
+        im_names = Info['im_names']
 
         print("im_names")
         print(im_names)
