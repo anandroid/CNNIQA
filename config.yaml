@@ -18,6 +18,10 @@ LIVE:
   datainfo: ./data/LIVEfullinfo.mat
   im_dir: data/ldq/databaserelease2/
 
+POLYP:
+  datainfo: ./data/POLYPinfo.mat
+  im_dir: data/ldq/polyp/
+
 patch_size: 32
 stride: 32
 
