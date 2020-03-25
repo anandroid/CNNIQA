@@ -97,8 +97,7 @@ class PolypDataset(Dataset):
 
         Info = loadmat(datainfo)
 
-        print("Info ")
-        print(Info)
+
 
         #Info = h5py.File(datainfo, 'r')
 
@@ -109,7 +108,6 @@ class PolypDataset(Dataset):
         train_index, val_index, test_index = [], [], []
 
 
-        print("len of ref ids"+str(len(ref_ids)))
         for i in range(len(ref_ids)):
             if (i<497 and i>0) or (i<968 and i>=829):
                 train_index.append(i)
@@ -123,7 +121,7 @@ class PolypDataset(Dataset):
         if status == 'train':
             self.index = train_index
             print("# Train Images: {}".format(len(self.index)))
-            print("# Test Images: {}".format(len(test_index)))
+
 
         if status == 'test':
             self.index = test_index
@@ -137,18 +135,14 @@ class PolypDataset(Dataset):
         self.mos_std = Info['subjective_scoresSTD']
         im_names = Info['im_names']
 
-        print("im_names")
-        print(im_names)
+
 
         self.patches = ()
         self.label = []
         self.label_std = []
         for idx in range(len(self.index)):
             #print("Preprocessing Image: {}".format(im_names[idx]))
-            print("name result")
-            print(im_names[idx])
-            print("subject score ")
-            print(self.mos[idx])
+
             im = self.loader(os.path.join(im_dir, im_names[idx]))
 
             patches = NonOverlappingCropPatches(im, self.patch_size, self.stride)
