@@ -10,6 +10,7 @@ from PIL import Image
 from scipy.signal import convolve2d
 import numpy as np
 import h5py
+import scipy.io as sio
 
 
 def default_loader(path):
@@ -44,7 +45,9 @@ class PolypDataset(Dataset):
         self.stride = conf['stride']
         datainfo = conf['datainfo']
 
-        Info = h5py.File(datainfo, 'r')
+        Info = sio.loadmat(datainfo)
+
+        #Info = h5py.File(datainfo, 'r')
 
         ref_ids = Info['ref_ids'][0, :]
         test_ratio = conf['test_ratio']
