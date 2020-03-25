@@ -85,7 +85,7 @@ class PolypDataset(Dataset):
 
         self.mos = Info['subjective_scores']
         self.mos_std = Info['subjective_scoresSTD']
-        im_names = [Info['im_names']]
+        im_names = Info['im_names']
 
         self.patches = ()
         self.label = []
