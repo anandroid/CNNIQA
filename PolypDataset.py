@@ -56,6 +56,7 @@ class PolypDataset(Dataset):
         train_index, val_index, test_index = [], [], []
 
 
+        print("len of ref ids"+str(len(ref_ids)))
         for i in range(len(ref_ids)):
             if (i<497 and i>0) or (i<968 and i>=829):
                 train_index.append(i)
