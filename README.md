@@ -8,7 +8,7 @@ PyTorch 1.3 implementation of the following paper:
 
 ## Training
 ```bash
-CUDA_VISIBLE_DEVICES=0 python main.py --exp_id=0 --database=LIVE
+CUDA_VISIBLE_DEVICES=0 python3 main.py --exp_id=0 --database=LIVE
 ```
 Before training, the `im_dir` in `config.yaml` must to be specified.
 Train/Val/Test split ratio in intra-database experiments can be set in `config.yaml` (default is 0.6/0.2/0.2).
@@ -20,7 +20,7 @@ python3 test_demo.py --im_path=data/I03_01_1.bmp
 ```
 ### Cross Dataset
 ```bash
-python test_cross_dataset.py --help
+python3 test_cross_dataset.py --help
 ```
 TODO: add metrics calculation. SROCC, KROCC can be easily get. PLCC, RMSE, MAE, OR should be calculated after a non-linear fitting since the quality score ranges are not the same across different IQA datasets.
 
