@@ -83,10 +83,9 @@ class PolypDataset(Dataset):
             self.index = val_index
             print("# Val Images: {}".format(len(self.index)))
 
-        self.mos = Info['subjective_scores'][0, self.index]
-        self.mos_std = Info['subjective_scoresSTD'][0, self.index]
-        im_names = [Info[Info['im_names'][0, :][i]][()].tobytes() \
-                        [::2].decode() for i in self.index]
+        self.mos = Info['subjective_scores']
+        self.mos_std = Info['subjective_scoresSTD']
+        im_names = [Info['im_names']]
 
         self.patches = ()
         self.label = []
