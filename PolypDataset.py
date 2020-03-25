@@ -52,7 +52,7 @@ class PolypDataset(Dataset):
 
         #Info = h5py.File(datainfo, 'r')
 
-        ref_ids = Info['ref_ids'][0, :]
+        ref_ids = Info['ref_ids']
         test_ratio = conf['test_ratio']
         train_ratio = conf['train_ratio']
 
