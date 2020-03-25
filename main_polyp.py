@@ -131,6 +131,7 @@ def run(train_batch_size, epochs, lr, weight_decay, config, exp_id, log_dir, tra
         train_loader, val_loader = get_data_loaders(config, train_batch_size, exp_id)
 
     device = torch.device("cuda" if not disable_gpu and torch.cuda.is_available() else "cpu")
+    print("device",device)
     model = CNNIQAnet(ker_size=config['kernel_size'],
                       n_kers=config['n_kernels'],
                       n1_nodes=config['n1_nodes'],
