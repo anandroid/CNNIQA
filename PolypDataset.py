@@ -87,11 +87,16 @@ class PolypDataset(Dataset):
         self.mos_std = Info['subjective_scoresSTD']
         im_names = Info['im_names']
 
+        print("im_names")
+        print(im_names)
+
         self.patches = ()
         self.label = []
         self.label_std = []
         for idx in range(len(self.index)):
             #print("Preprocessing Image: {}".format(im_names[idx]))
+            print("name result")
+            print(im_names[idx])
             im = self.loader(os.path.join(im_dir, im_names[idx]))
 
             patches = NonOverlappingCropPatches(im, self.patch_size, self.stride)
