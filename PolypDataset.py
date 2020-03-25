@@ -83,9 +83,9 @@ class PolypDataset(Dataset):
             self.index = val_index
             print("# Val Images: {}".format(len(self.index)))
 
-        self.mos = Info['subjective_scores']
-        self.mos_std = Info['subjective_scoresSTD']
-        im_names = Info['im_names']
+        self.mos = Info['subjective_scores'][:,:self.index].squeeze().tolist()
+        self.mos_std = Info['subjective_scoresSTD'][:,:self.index].squeeze().tolist()
+        im_names = Info['im_names'][:,:self.index].squeeze().tolist()
 
         print("im_names")
         print(im_names)
