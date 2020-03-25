@@ -107,6 +107,7 @@ class CNNIQAnet(nn.Module):
 
 def get_data_loaders(config, train_batch_size, exp_id=0):
     train_dataset = PolypDataset(config, exp_id, 'train')
+    print("train_size "+str(train_batch_size))
     train_loader = torch.utils.data.DataLoader(train_dataset,
                                               batch_size=train_batch_size,
                                               shuffle=True,
