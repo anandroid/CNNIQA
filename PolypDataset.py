@@ -47,6 +47,9 @@ class PolypDataset(Dataset):
 
         Info = sio.loadmat(datainfo)
 
+        print("Info ")
+        print(Info)
+
         #Info = h5py.File(datainfo, 'r')
 
         ref_ids = Info['ref_ids'][0, :]
