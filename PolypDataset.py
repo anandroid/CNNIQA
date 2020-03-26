@@ -104,20 +104,26 @@ class PolypDataset(Dataset):
         ref_ids = Info['ref_ids']
         test_ratio = conf['test_ratio']
         train_ratio = conf['train_ratio']
+        val_ratio = conf['val_ratio']
 
         train_index, val_index, test_index = [], [], []
 
+        trainIndex = (int)((len(ref_ids)*train_ratio)/100)
+        testIndex = train_index+(int)((len(ref_ids)*train_ratio)/100)
+        valIndex = len(ref_ids)-testIndex
+
 
         for i in range(len(ref_ids)):
-            if (i<497 and i>0) or (i<968 and i>=829):
+            if i < trainIndex:
                 train_index.append(i)
                 print("Train :"+str(i))
-            elif (i>617 and i<829) or (i>1016 and i<=1062):
-                val_index.append(i)
-                print("Val :" + str(i))
-            else:
+            elif i< testIndex:
                 test_index.append(i)
                 print("Test :" + str(i))
+            else:
+                val_index.append(i)
+                print("Val :" + str(i))
+
 
 
 
