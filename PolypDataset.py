@@ -108,21 +108,19 @@ class PolypDataset(Dataset):
 
         train_index, val_index, test_index = [], [], []
 
-        trainIndex = (int)((len(ref_ids)*train_ratio)/100)
-        testIndex = trainIndex+(int)((len(ref_ids)*train_ratio)/100)
+        trainIndex = (int)((len(ref_ids)*train_ratio))
+        testIndex = trainIndex+(int)((len(ref_ids)*train_ratio))
         valIndex = len(ref_ids)-testIndex
 
 
         for i in range(len(ref_ids)):
             if i < trainIndex:
                 train_index.append(i)
-                print("Train :"+str(i))
             elif i< testIndex:
                 test_index.append(i)
-                print("Test :" + str(i))
             else:
                 val_index.append(i)
-                print("Val :" + str(i))
+
 
 
 
