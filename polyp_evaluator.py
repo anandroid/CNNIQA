@@ -12,6 +12,7 @@ from PIL import Image
 from IQADataset import NonOverlappingCropPatches
 from CNNIQAnet import CNNIQAnet
 import os
+from torch import nn
 
 
 
@@ -26,6 +27,8 @@ if __name__ == "__main__":
                       n_kers=50,
                       n1_nodes=800,
                       n2_nodes=800).to(device)
+
+    model = nn.DataParallel(model)
 
     checkpoint = torch.load('checkpoints/CNNIQA-POLYP-OLD')
 
