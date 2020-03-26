@@ -27,12 +27,17 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+    '''
     model = CNNIQAnet(ker_size=7,
                       n_kers=50,
                       n1_nodes=800,
                       n2_nodes=800).to(device)
 
     model.load_state_dict(torch.load(args.model_file))
+    '''
+
+    model = torch.load('checkpoints/CNNIQA-POLYP-OLD')
 
     im = Image.open(args.im_path).convert('L')
     patches = NonOverlappingCropPatches(im, 32, 32)
