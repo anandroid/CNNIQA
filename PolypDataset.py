@@ -115,10 +115,13 @@ class PolypDataset(Dataset):
 
         for i in range(len(ref_ids)):
             if i < trainIndex:
+                print("Train:"+str(i))
                 train_index.append(i)
             elif i< testIndex:
+                print("Test:"+str(i))
                 test_index.append(i)
             else:
+                print("Val:"+str(i))
                 val_index.append(i)
 
 
