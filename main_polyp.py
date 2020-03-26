@@ -115,7 +115,7 @@ def run(train_batch_size, epochs, lr, weight_decay, config, exp_id, log_dir, tra
     model = model.to(device)
     print(model)
     # if multi_gpu and torch.cuda.device_count() > 1:
-      #model = nn.DataParallel(model)
+    model = nn.DataParallel(model)
 
     optimizer = Adam(model.parameters(), lr=lr, weight_decay=weight_decay)
     global best_criterion
