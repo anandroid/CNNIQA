@@ -37,7 +37,14 @@ if __name__ == "__main__":
     model.load_state_dict(torch.load(args.model_file))
     '''
 
-    model = torch.load('checkpoints/CNNIQA-POLYP-OLD')
+    model = CNNIQAnet(ker_size=7,
+                      n_kers=50,
+                      n1_nodes=800,
+                      n2_nodes=800).to(device)
+
+    checkpoint = torch.load('checkpoints/CNNIQA-POLYP-OLD')
+
+    model.load_state_dict(checkpoint['model_state_dict'])
 
     im = Image.open(args.im_path).convert('L')
     patches = NonOverlappingCropPatches(im, 32, 32)
