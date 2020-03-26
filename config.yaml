@@ -22,7 +22,7 @@ POLYP:
   datainfo: ./data/POLYPinfo.mat
   im_dir: data/ldq/polyp/
 
-patch_size: 128
+patch_size: 64
 stride: 32
 
 train_ratio: 0.6
