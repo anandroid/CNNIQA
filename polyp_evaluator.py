@@ -28,7 +28,7 @@ if __name__ == "__main__":
                       n1_nodes=800,
                       n2_nodes=800).to(device)
 
-    model = nn.DataParallel(model)
+    #model = nn.DataParallel(model)
 
     checkpoint = torch.load('checkpoints/CNNIQA-POLYP-OLD')
 
