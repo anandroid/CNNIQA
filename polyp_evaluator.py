@@ -33,9 +33,6 @@ if __name__ == "__main__":
 
 
 
-    im = Image.open(args.im_path).convert('L')
-    patches = NonOverlappingCropPatches(im, 32, 32)
-
     clear_dir =  "data/ldq/polyp/0-clear/";
 
     blur_dir =  "data/ldq/polyp/1-blurry/"
