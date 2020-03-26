@@ -109,7 +109,7 @@ class PolypDataset(Dataset):
         train_index, val_index, test_index = [], [], []
 
         trainIndex = (int)((len(ref_ids)*train_ratio))
-        testIndex = trainIndex+(int)((len(ref_ids)*train_ratio))
+        testIndex = trainIndex+(int)((len(ref_ids)*test_ratio))
         valIndex = len(ref_ids)-testIndex
 
 
