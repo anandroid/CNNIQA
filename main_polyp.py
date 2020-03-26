@@ -112,6 +112,10 @@ def run(train_batch_size, epochs, lr, weight_decay, config, exp_id, log_dir, tra
                       n1_nodes=config['n1_nodes'],
                       n2_nodes=config['n2_nodes'])
     writer = SummaryWriter(log_dir=log_dir)
+
+    checkpoint = torch.load('checkpoints/CNNIQA-POLYP-RUNNING')
+    model.load_state_dict(checkpoint)
+
     model = model.to(device)
     print(model)
     # if multi_gpu and torch.cuda.device_count() > 1:
