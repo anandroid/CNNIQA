@@ -126,11 +126,6 @@ class PolypDataset(Dataset):
 
 
 
-
-
-
-
-
         if status == 'train':
             self.index = train_index
             print("# Train Images: {}".format(len(self.index)))
