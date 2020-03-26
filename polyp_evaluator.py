@@ -6,36 +6,21 @@ Test Demo
  Date: 2018/5/26
 """
 
-from argparse import ArgumentParser
+
 import torch
-from torch import nn
-import torch.nn.functional as F
 from PIL import Image
 from IQADataset import NonOverlappingCropPatches
 from CNNIQAnet import CNNIQAnet
+import os
 
 
 
 
 if __name__ == "__main__":
-    parser = ArgumentParser(description='PyTorch CNNIQA test demo')
-    parser.add_argument("--im_path", type=str, default='data/I03_01_1.bmp',
-                        help="image path")
-    parser.add_argument("--model_file", type=str, default='models/CNNIQA-LIVE',
-                        help="model file (default: models/CNNIQA-LIVE)")
-
-    args = parser.parse_args()
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    '''
-    model = CNNIQAnet(ker_size=7,
-                      n_kers=50,
-                      n1_nodes=800,
-                      n2_nodes=800).to(device)
 
-    model.load_state_dict(torch.load(args.model_file))
-    '''
 
     model = CNNIQAnet(ker_size=7,
                       n_kers=50,
@@ -46,10 +31,51 @@ if __name__ == "__main__":
 
     model.load_state_dict(checkpoint)
 
+
+
     im = Image.open(args.im_path).convert('L')
     patches = NonOverlappingCropPatches(im, 32, 32)
 
+    clear_dir =  "data/ldq/polyp/0-clear/";
+
+    blur_dir =  "data/ldq/polyp/1-blurry/"
+
+    clear_images = os.listdir(clear_dir)
+
+    blur_images = os.listdir(blur_dir)
+
+
     model.eval()
+
+    missScore=0
+
     with torch.no_grad():
-        patch_scores = model(torch.stack(patches).to(device))
-        print(patch_scores.mean().item())
+        scores = []
+        for image in clear_images:
+            path = clear_dir + image
+            im = Image.open(path).convert('L')
+            patches = NonOverlappingCropPatches(im, 32, 32)
+            patch_scores = model(torch.stack(patches).to(device))
+            score = patch_scores.mean().item()
+            print(image +":"+str(score))
+            if score > 30:
+                missScore=missScore+1
+
+        print("################")
+
+
+        for image in blur_images:
+            path = blur_dir + image
+            im = Image.open(path).convert('L')
+            patches = NonOverlappingCropPatches(im, 32, 32)
+            patch_scores = model(torch.stack(patches).to(device))
+            score = patch_scores.mean().item()
+            print(image+":"+str(score))
+            if score < 30:
+                missScore = missScore+1
+
+
+        print("MissScore :"+str(missScore))
+
+
+
