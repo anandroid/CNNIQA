@@ -140,8 +140,11 @@ class PolypDataset(Dataset):
         self.patches = ()
         self.label = []
         self.label_std = []
+        print("Dmos scores")
         for idx in range(len(self.index)):
             #print("Preprocessing Image: {}".format(im_names[idx]))
+            print(im_names[idx]+":"+str(self.mos[idx]))
+
 
             im = self.loader(os.path.join(im_dir, im_names[idx]))
 

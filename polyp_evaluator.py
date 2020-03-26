@@ -32,7 +32,6 @@ if __name__ == "__main__":
     model.load_state_dict(checkpoint)
 
 
-
     clear_dir =  "data/ldq/polyp/0-clear/";
 
     blur_dir =  "data/ldq/polyp/1-blurry/"
