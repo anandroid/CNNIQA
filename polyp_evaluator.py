@@ -104,5 +104,8 @@ if __name__ == "__main__":
 
             print("Blurry | score :" + str(x) + pred_value)
 
-        print("Total :" + str(len(blur_scores) - int(len(blur_scores) * SVM_TRAIN_RATIO)) + " Mispredicted :" +
+        total = (len(blur_scores) - int(len(blur_scores) * SVM_TRAIN_RATIO))+\
+        (len(clear_scores) - int(len(clear_scores) * SVM_TRAIN_RATIO))
+
+        print("Total :" + str(total) + " Mispredicted :" +
               str(misPredicts))
