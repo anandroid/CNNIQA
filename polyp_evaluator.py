@@ -64,7 +64,7 @@ if __name__ == "__main__":
             patch_scores = model(torch.stack(patches).to(device))
             score = patch_scores.mean().item()
             print(image + ":" + str(score))
-            blur_scores[score]
+            blur_scores.append(score)
 
         SVM_TRAIN_RATIO = 0.6
 
