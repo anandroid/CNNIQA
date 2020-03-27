@@ -83,22 +83,22 @@ if __name__ == "__main__":
 
         misPredicts = 0
         for i in range(int(len(clear_scores) * SVM_TRAIN_RATIO), len(clear_scores)):
-            x = [clear_scores[i],0]
+            x = [[clear_scores[i],0]]
             y = clf.predict(x)
             true_value = "Clear "
             pred_value = "Clear"
-            if y == 1:
+            if y[0] == 1:
                 pred_value = "Blurry"
                 misPredicts = misPredicts + 1
 
             print("Clear | score :" + str(x) + pred_value)
 
         for i in range(int(len(blur_scores) * SVM_TRAIN_RATIO), len(blur_scores)):
-            x = [blur_scores[i],0]
+            x = [[blur_scores[i],0]]
             y = clf.predict(x)
             true_value = "Blurry "
             pred_value = "Blurry"
-            if y == 0:
+            if y[0] == 0:
                 pred_value = "Clear"
                 misPredicts = misPredicts + 1
 
