@@ -68,7 +68,7 @@ if __name__ == "__main__":
 
         blur_scores = []
         blur_orb_scores = []
-        blur_blob_scores=[]
+        #blur_blob_scores=[]
         for image in blur_images:
             path = blur_dir + image
             im = Image.open(path).convert('L')
@@ -81,15 +81,17 @@ if __name__ == "__main__":
             #blur_blob_scores.append(blobdetection(path))
             im.close()
 
-        SVM_TRAIN_RATIO = 0.6
+        SVM_TRAIN_RATIO_CLEAR = 0.6
+        SVM_TRAIN_RATIO_BLUR =0.8
+        SVM_TEST_RATIO_BLUR=0.6
 
         X, y = [], []
 
-        for i in range(int(len(clear_scores) * SVM_TRAIN_RATIO)):
+        for i in range(int(len(clear_scores) * SVM_TRAIN_RATIO_CLEAR)):
             X.append([clear_scores[i],clear_orb_scores[i]])
             y.append(0)
 
-        for i in range(int(len(blur_scores) * SVM_TRAIN_RATIO)):
+        for i in range(int(len(blur_scores) * SVM_TRAIN_RATIO_BLUR)):
             X.append([blur_scores[i],blur_orb_scores[i]])
             y.append(1)
 
@@ -100,7 +102,7 @@ if __name__ == "__main__":
         Y_pred=[]
 
         misPredicts = 0
-        for i in range(int(len(clear_scores) * SVM_TRAIN_RATIO), len(clear_scores)):
+        for i in range(int(len(clear_scores) * SVM_TRAIN_RATIO_CLEAR), len(clear_scores)):
             x = [[clear_scores[i],clear_orb_scores[i]]]
             y = clf.predict(x)
             Y_true.append(0)
@@ -113,7 +115,7 @@ if __name__ == "__main__":
 
             print("Clear | score :" + str(x) + pred_value)
 
-        for i in range(int(len(blur_scores) * SVM_TRAIN_RATIO), len(blur_scores)):
+        for i in range(int(len(blur_scores) * SVM_TEST_RATIO_BLUR), len(blur_scores)):
             x = [[blur_scores[i],blur_orb_scores[i]]]
             y = clf.predict(x)
             Y_true.append(1)
@@ -126,8 +128,8 @@ if __name__ == "__main__":
 
             print("Blurry | score :" + str(x) + pred_value)
 
-        total = (len(blur_scores) - int(len(blur_scores) * SVM_TRAIN_RATIO))+\
-        (len(clear_scores) - int(len(clear_scores) * SVM_TRAIN_RATIO))
+        total = (len(blur_scores) - int(len(blur_scores) * SVM_TEST_RATIO_BLUR))+\
+        (len(clear_scores) - int(len(clear_scores) * SVM_TRAIN_RATIO_CLEAR))
 
         print("Total :" + str(total) + " Mispredicted :" +
               str(misPredicts))
