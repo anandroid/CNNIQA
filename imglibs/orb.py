@@ -10,7 +10,8 @@ import PIL.Image
 
 
 def orb(img_path):
-    img = np.array(PIL.Image.open(img_path).convert('L'))
+    image = PIL.Image.open(img_path).convert('L')
+    img = np.array(image)
 
     descriptor_extractor = ORB(n_keypoints=200)
 
@@ -30,6 +31,6 @@ def orb(img_path):
     ax[0].set_title("Original Image")
     plt.show()
 
-    img.close()
+    image.close()
 
     return keypoints1.shape[0]+descriptors1.shape[0]
