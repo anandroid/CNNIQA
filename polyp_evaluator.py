@@ -15,6 +15,7 @@ from sklearn import svm
 from CNNIQAnet import CNNIQAnet
 from IQADataset import NonOverlappingCropPatches
 from imglibs.orb import orb
+from imglibs.blob_detection import  blobdetection
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import roc_auc_score
 
@@ -49,6 +50,7 @@ if __name__ == "__main__":
     with torch.no_grad():
         clear_scores = []
         clear_orb_scores=[]
+        clear_blob_scores=[]
 
         for image in clear_images:
             path = clear_dir + image
@@ -59,11 +61,14 @@ if __name__ == "__main__":
             print(image + ":" + str(score))
             clear_scores.append(score)
             clear_orb_scores.append(orb(path))
+            clear_blob_scores.append(blobdetection(path))
+            im.close()
 
         print("################")
 
         blur_scores = []
         blur_orb_scores = []
+        blur_blob_scores=[]
         for image in blur_images:
             path = blur_dir + image
             im = Image.open(path).convert('L')
@@ -73,6 +78,8 @@ if __name__ == "__main__":
             print(image + ":" + str(score))
             blur_scores.append(score)
             blur_orb_scores.append(orb(path))
+            blur_blob_scores.append(blobdetection(path))
+            im.close()
 
         SVM_TRAIN_RATIO = 0.6
 
@@ -94,7 +101,7 @@ if __name__ == "__main__":
 
         misPredicts = 0
         for i in range(int(len(clear_scores) * SVM_TRAIN_RATIO), len(clear_scores)):
-            x = [[clear_scores[i],clear_orb_scores[i]]]
+            x = [[clear_scores[i],clear_blob_scores[i]]]
             y = clf.predict(x)
             Y_true.append(0)
             Y_pred.append(y)
@@ -107,7 +114,7 @@ if __name__ == "__main__":
             print("Clear | score :" + str(x) + pred_value)
 
         for i in range(int(len(blur_scores) * SVM_TRAIN_RATIO), len(blur_scores)):
-            x = [[blur_scores[i],blur_orb_scores[i]]]
+            x = [[blur_scores[i],blur_blob_scores[i]]]
             y = clf.predict(x)
             Y_true.append(1)
             Y_pred.append(y)

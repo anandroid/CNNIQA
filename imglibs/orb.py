@@ -30,4 +30,6 @@ def orb(img_path):
     ax[0].set_title("Original Image")
     plt.show()
 
+    img.close()
+
     return keypoints1.shape[0]+descriptors1.shape[0]
