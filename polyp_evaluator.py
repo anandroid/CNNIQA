@@ -26,7 +26,7 @@ if __name__ == "__main__":
 
     # model = nn.DataParallel(model)
 
-    checkpoint = torch.load('checkpoints/CNNIQA-POLYP-OLD')
+    checkpoint = torch.load('checkpoints/CNNIQA-POLYP-RUNNING')
 
     model.load_state_dict(checkpoint)
 
