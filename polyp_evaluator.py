@@ -49,7 +49,7 @@ if __name__ == "__main__":
 
     with torch.no_grad():
         clear_scores = []
-        clear_orb_scores=[]
+        #clear_orb_scores=[]
         clear_blob_scores=[]
 
         for image in clear_images:
@@ -60,14 +60,14 @@ if __name__ == "__main__":
             score = patch_scores.mean().item()
             print(image + ":" + str(score))
             clear_scores.append(score)
-            clear_orb_scores.append(orb(path))
+            #clear_orb_scores.append(orb(path))
             clear_blob_scores.append(blobdetection(path))
             im.close()
 
         print("################")
 
         blur_scores = []
-        blur_orb_scores = []
+        #blur_orb_scores = []
         blur_blob_scores=[]
         for image in blur_images:
             path = blur_dir + image
@@ -77,7 +77,7 @@ if __name__ == "__main__":
             score = patch_scores.mean().item()
             print(image + ":" + str(score))
             blur_scores.append(score)
-            blur_orb_scores.append(orb(path))
+            #blur_orb_scores.append(orb(path))
             blur_blob_scores.append(blobdetection(path))
             im.close()
 
@@ -86,11 +86,11 @@ if __name__ == "__main__":
         X, y = [], []
 
         for i in range(int(len(clear_scores) * SVM_TRAIN_RATIO)):
-            X.append([clear_scores[i],clear_orb_scores[i]])
+            X.append([clear_scores[i],clear_blob_scores[i]])
             y.append(0)
 
         for i in range(int(len(blur_scores) * SVM_TRAIN_RATIO)):
-            X.append([blur_scores[i],blur_orb_scores[i]])
+            X.append([blur_scores[i],blur_blob_scores[i]])
             y.append(1)
 
         clf = svm.SVC(kernel='linear', C=1.0)
