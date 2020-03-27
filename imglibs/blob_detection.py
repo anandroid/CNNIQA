@@ -8,7 +8,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def blobdetection(img_path):
-    image = np.array(PIL.Image.open(img_path).convert('L'))
+    image = PIL.Image.open(img_path).convert('L')
+    img = np.array(image)
     image_gray = rgb2gray(image)
 
     blobs_log = blob_log(image_gray, max_sigma=30, num_sigma=10, threshold=.1)
@@ -32,7 +33,7 @@ def blobdetection(img_path):
 
     for idx, (blobs, color, title) in enumerate(sequence):
         ax[idx].set_title(title)
-        ax[idx].imshow(image)
+        ax[idx].imshow(img)
         for blob in blobs:
             y, x, r = blob
             c = plt.Circle((x, y), r, color=color, linewidth=2, fill=False)
