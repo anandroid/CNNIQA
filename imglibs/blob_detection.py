@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 def blobdetection(img_path):
     image = PIL.Image.open(img_path).convert('L')
     img = np.array(image)
-    image_gray = rgb2gray(image)
+    image_gray = rgb2gray(img)
 
     blobs_log = blob_log(image_gray, max_sigma=30, num_sigma=10, threshold=.1)
 
