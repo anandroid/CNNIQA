@@ -68,22 +68,22 @@ if __name__ == "__main__":
 
         SVM_TRAIN_RATIO = 0.6
 
-        x, y = [], []
+        X, y = [], []
 
         for i in range(int(len(clear_scores) * SVM_TRAIN_RATIO)):
-            x.append(clear_scores[i])
+            X.append([clear_scores[i],0])
             y.append(0)
 
         for i in range(int(len(blur_scores) * SVM_TRAIN_RATIO)):
-            x.append(blur_scores[i])
+            X.append([blur_scores[i],0])
             y.append(1)
 
         clf = svm.SVC(kernel='linear', C=1.0)
-        clf.fit(x, y)
+        clf.fit(X, y)
 
         misPredicts = 0
         for i in range(int(len(clear_scores) * SVM_TRAIN_RATIO), len(clear_scores)):
-            x = clear_scores[i]
+            x = [clear_scores[i],0]
             y = clf.predict(x)
             true_value = "Clear "
             pred_value = "Clear"
@@ -94,7 +94,7 @@ if __name__ == "__main__":
             print("Clear | score :" + str(x) + pred_value)
 
         for i in range(int(len(blur_scores) * SVM_TRAIN_RATIO), len(blur_scores)):
-            x = blur_scores[i]
+            x = [blur_scores[i],0]
             y = clf.predict(x)
             true_value = "Blurry "
             pred_value = "Blurry"
